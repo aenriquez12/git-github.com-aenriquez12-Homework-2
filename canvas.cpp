@@ -1,13 +1,15 @@
-//*****************************************************************************************************************************************
-// Team # 11                           CSCI 2380                          Fall 2024                        Homework # 2 
-// Anthony Enriquez 
-// Fabian Garza
-//*****************************************************************************************************************************************
+// //*****************************************************************************************************************************************
+// // Team # 11                           CSCI 2380                          Fall 2024                        Homework # 2 
+// // Anthony Enriquez 
+// // Fabian Garza
+// //*****************************************************************************************************************************************
 
 
 
 
 #include "canvas.h"
+#include <cstddef>
+
 
 
 Canvas::Canvas(int width)
@@ -24,7 +26,7 @@ Canvas::Canvas(int width)
     for(int i=0; i<5; i++)                                  // Loops through the rows       
     {
       C[i] = new char[width];                               // Now it loops through the columms 
-      for(int j = 0; j< width; j++) C[i][j] = ' ';          
+      for(int j = 0; j< width; j++) C[i][j] = ' ';          // initialize all elements to ' '
     }
   }
 }
@@ -42,7 +44,7 @@ Canvas::Canvas(char x)
   
   
  
-  C = new char* [5];                                         //created dynamic character 2D array
+  C = new char*[5];                                         //created dynamic character 2D array
   for(int i= 0; i< 5; ++i)
   {
     C[i] = new char [_width];    
@@ -152,16 +154,41 @@ int Canvas::width(){
     return _width;                                  // Return the stored width value
 }
 
-string Canvas::to_string(){
-  
-  
-}
-
-void Canvas::replace(char old_char, char new_char){
-}
-
-Canvas::~Canvas()
+string Canvas::to_string()                          //Method to return the canvas as a string
 {
+  if(C == nullptr) return "";                       //Empty canvas case
+  
+  string results;
+  for(int i=0; i<5; i++){  
+    for(int j = 0; j<_width; j++){
+        results += C[i][j];
+    }
+    results+= '\n';                                 //Added a newline at the end of each row
+}
+    return results;
+}
 
-  delete[] C;                                       // destroys the nullptr and prevents memory leak
+
+void Canvas::replace(char old_char, char new_char)    //Method to replace every instance of old_char with new_char
+{
+    if(C == nullptr) return;        //Check if canvas is empty
+    
+    for(int i=0; i<5; i++)
+  {    
+    for(int j = 0; j<_width; j++)
+    {
+      if(C[i][j] == old_char) // replace old character by new character
+          C[i][j] = new_char;
+    }
+  }
+}
+
+Canvas::~Canvas()                           //Destructor to deallocate memory
+{
+    if(C != nullptr){
+    for (int i = 0; i < 5; ++i) {                      
+    delete[] C[i];                                    
+    }
+    delete[] C;                                         
+}
 }
