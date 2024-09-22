@@ -165,5 +165,3 @@ Canvas::~Canvas()
 
   delete[] C;                                       // destroys the nullptr and prevents memory leak
 }
-
-
